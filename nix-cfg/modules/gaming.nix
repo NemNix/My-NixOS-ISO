@@ -1,4 +1,7 @@
-{ pkgs, username, ... }:
+{ pkgs, config, ... }:
+let
+  username = config.var.username;
+in
 {
   users.users.${username}.packages = with pkgs; [ heroic ];
   hardware.steam-hardware.enable = true;

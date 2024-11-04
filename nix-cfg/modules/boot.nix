@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 {
 
   boot = {
@@ -16,9 +16,19 @@
       };
     };
 
-    kernelPackages = pkgs.linuxPackages_latest;
-    # pkgs.linuxPackages 
-    # pkgs.linuxPackages_zen 
-    # pkgs.linuxPackages_xanmod_latest
+    options = {
+      kernel = lib.mkOption {
+        type = lib.types.string;
+        default = "null";
+      };
+    };
+
+    config = {
+      kernelPackages =
+        if config.options.kernel == "zen" then pkgs.linuxPackages_zen
+        else if config.options.kernel == "lts" then pkgs.linuxPackages
+        else if config.options.kernel == "xanmod" then pkgs.linuxPackages_xanmod_latest
+        else pkgs.linuxPackages_latest;
+    };
   };
 }

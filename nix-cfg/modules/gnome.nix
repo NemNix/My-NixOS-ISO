@@ -13,6 +13,7 @@
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.systemPackages = with pkgs.gnomeExtensions; [
     caffeine
+    gsconnect
     appindicator
     dash-to-dock
   ];

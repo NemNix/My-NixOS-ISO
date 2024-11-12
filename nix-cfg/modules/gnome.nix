@@ -12,7 +12,10 @@
   # Packages système
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.systemPackages = [
+    pkgs.vlc-bin
     pkgs.gnome.gnome-tweaks
+
+    # Extension
     pkgs.gnomeExtensions.caffeine
     pkgs.gnomeExtensions.gsconnect
     pkgs.gnomeExtensions.appindicator
@@ -32,20 +35,13 @@
     gnome.iagno
     gnome.hitori
     gnome.atomix
-    gnome.simple-scan
     gnome.yelp
-    gnome.gnome-maps
-    gnome.gnome-clocks
-    gnome-connections
     gnome.geary
     xterm
     gnome-user-docs
-    gnome.gnome-calculator
-    gnome.cheese
     epiphany
     gnome.gnome-packagekit
     packagekit
-    system-config-printer
     gnome-tour
   ];
 

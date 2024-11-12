@@ -12,12 +12,6 @@ in
 
   hardware.steam-hardware.enable = true;
 
-  services.ananicy = {
-    enable = true;
-    package = pkgs.ananicy-cpp;
-    rulesProvider = pkgs.ananicy-rules-cachyos;
-  };
-
   programs = {
     steam = {
       enable = true;
@@ -25,15 +19,6 @@ in
       gamescopeSession.enable = true;
       localNetworkGameTransfers.openFirewall = true;
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
-    };
-
-    gamescope = {
-      enable = false;
-      args = [
-        "-w 1920 -h 1080"
-        "-F nis"
-        "f"
-      ];
     };
   };
 }

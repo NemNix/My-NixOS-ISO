@@ -9,17 +9,18 @@
   };
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Paquets system
+  # Packages système
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  environment.systemPackages = with pkgs.gnomeExtensions; [
-    caffeine
-    gsconnect
-    appindicator
-    dash-to-dock
+  environment.systemPackages = [
+    pkgs.gnome.gnome-tweaks
+    pkgs.gnomeExtensions.caffeine
+    pkgs.gnomeExtensions.gsconnect
+    pkgs.gnomeExtensions.appindicator
+    pkgs.gnomeExtensions.dash-to-dock
   ];
 
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  # Paquets exclues de l'instalation de gnome
+  # Paquets exclus de l'installation de GNOME
   # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   environment.gnome.excludePackages = with pkgs; [
     gnome.gnome-music

@@ -1,7 +1,10 @@
+{ config, ... }:
 {
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   # NE TOUCHEZ A RIEN
   # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  boot.kernelParams = if config.boot.kernelModules == [ "kvm-amd" ] then [ "amd_pstate=active" ] else [ ];
 
   hardware.graphics = {
     enable = true;

@@ -3,12 +3,14 @@
 
   config = {
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # Vos Configurations
+    # Vos configurations
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    kernel = "latest"; # lts OU xanmod OU zen OU latest
-    drivers.nvidia = "null"; # Desktop ou laptop
+    kernel = "latest"; # lts, xanmod, zen, latest
+    drivers.nvidia = "null"; # desktop, laptop
+    montage-video = false; # true ou false
 
     var = {
+      # UNIQUEMENT LAPTOP : RENSEIGNER VOS PCI : https://nixos.wiki/wiki/Nvidia
       intelBusId = "";
       amdgpuBusId = "";
       nvidiaBusId = "";

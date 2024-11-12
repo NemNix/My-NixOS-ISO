@@ -2,20 +2,20 @@
 let
   username = config.var.username;
 in
-
 {
   services.flatpak.enable = true;
-  xdg.portal.enable = true;
 
   users.users.${username}.packages = with pkgs; [
-    obs-studio
-    kdenlive
+
+    # APP
     firefox-bin
+    thunderbird-latest
+
     discord
     freetube
-    thunderbird-latest
-    gimp
-    inkscape
+
+    # Bureautique
     libreoffice-bin
+
   ];
 } 

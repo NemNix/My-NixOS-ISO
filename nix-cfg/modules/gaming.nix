@@ -27,12 +27,6 @@ in
       extraCompatPackages = with pkgs; [ proton-ge-bin ];
     };
 
-    gamemode = {
-      enable = false;
-      enableRenice = false;
-      settings = { };
-    };
-
     gamescope = {
       enable = false;
       args = [

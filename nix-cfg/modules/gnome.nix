@@ -48,4 +48,22 @@
     system-config-printer
     gnome-tour
   ];
+
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  # Paramètre GNOME
+  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  dconf.settings = {
+
+    "org/gnome/desktop/wm/preferences" = {
+      button-layout = "appmenu:minimize,maximize,close";
+      focus-mode = "click";
+      visual-bell = false;
+    };
+
+    "org/gnome/desktop/peripherals/touchpad" = {
+      click-method = "areas";
+      tap-to-click = true;
+      two-finger-scrolling-enabled = true;
+    };
+  };
 }

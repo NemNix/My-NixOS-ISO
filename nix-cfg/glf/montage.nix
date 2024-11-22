@@ -3,6 +3,7 @@
   options = {
     montage-video = lib.mkOption {
       type = lib.types.bool;
+      default = false;
     };
   };
   config = {
@@ -10,7 +11,7 @@
       if config.montage-video == true then with pkgs;
       [
         obs-studio
-        kdenlive
+        kdePackages.kdenlive
         gimp
         inkscape
       ]

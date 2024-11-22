@@ -1,31 +1,37 @@
 {
-  inputs = { nixpkgs.url = "nixpkgs/nixos-unstable"; };
+  inputs = { nixpkgs.url = "nixpkgs/release-24.11"; };
 
   outputs = { self, nixpkgs, ... } @ inputs:
     let
-      systems = [ "aarch64-linux" "x86_64-linux" ];
+      system = "x86_64-linux";
     in
     rec {
-
-      # Generate iso configurations for each system
-      iso = builtins.mapAttrs (name: config: config.config.system.build.isoImage) nixosConfigurations;
-      # Generate nixosConfigurations for each system
-      nixosConfigurations = builtins.foldl' (acc: system: acc // (nixosConfigurationsForAllSystems system)) { } systems;
-
-      nixosConfigurationsForAllSystems = system: {
-        "offline-installer-${system}" = nixpkgs.lib.nixosSystem {
+      nixosConfigurations = {
+        "glf-installer" = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs; };
           inherit system;
 
           modules = [
             "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
-            ./nix-cfg
-
+            "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
+            ./nix-cfg/configuration.nix
             {
               nixpkgs.overlays = [
                 (self: super: {
                   calamares-nixos-extensions = super.calamares-nixos-extensions.overrideAttrs (oldAttrs: {
-                    patches = oldAttrs.patches or [ ] ++ [ ./patches/nixos.patch ];
+                    postInstall = ''
+                                cp ${./patches/calamares-nixos-extensions/modules/nixos/main.py}             $out/lib/calamares/modules/nixos/main.py
+                      		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/show.qml}        $out/share/calamares/branding/nixos/show.qml
+                                cp -r ${./patches/calamares-nixos-extensions/branding/nixos/white.png}       $out/share/calamares/branding/nixos/white.png
+                      		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/base.png}        $out/share/calamares/branding/nixos/base.png
+                      		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/fast.png}        $out/share/calamares/branding/nixos/fast.png
+                      		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/gaming.png}      $out/share/calamares/branding/nixos/gaming.png
+                      		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/logo-glf-os.svg} $out/share/calamares/branding/nixos/logo-glf-os.svg
+                      		      cp -r ${./patches/calamares-nixos-extensions/branding/nixos/branding.desc}   $out/share/calamares/branding/nixos/branding.desc
+
+                      		      cp -r ${./patches/calamares-nixos-extensions/config/modules/packagechooser.conf}   $out/share/calamares/modules/packagechooser.conf
+                      		      cp -r ${./patches/calamares-nixos-extensions/config/settings.conf}   $out/share/calamares/settings.conf
+                    '';
                   });
                 })
               ];
@@ -39,13 +45,15 @@
                     target = "/nix-cfg";
                   }
                 ];
-                includeSystemBuildDependencies = false; # ISO OFFLINE
+                includeSystemBuildDependencies = false;
                 storeContents = [ config.system.build.toplevel ];
-                squashfsCompression = "gzip -Xcompression-level 1";
+                squashfsCompression = "zstd -Xcompression-level 22";
               };
             })
           ];
         };
       };
+
+      iso = nixosConfigurations."glf-installer".config.system.build.isoImage;
     };
 }
